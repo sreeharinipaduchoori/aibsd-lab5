@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hospital Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>🏥 MediCare</h2>
+
+        <a href="#" onclick="showPage('dashboard')">Dashboard</a>
+        <a href="#" onclick="showPage('patients')">Patients</a>
+        <a href="#" onclick="showPage('doctors')">Doctors</a>
+        <a href="#" onclick="showPage('appointments')">Appointments</a>
+        <a href="#" onclick="showPage('billing')">Billing</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <header>
+            <h1>Hospital Management System</h1>
+            <p>Welcome, Admin!</p>
+        </header>
+
+        <!-- Dashboard -->
+        <section id="dashboard" class="page">
+
+            <h2>Dashboard Overview</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Total Patients</h3>
+                    <h1 id="patientCount">0</h1>
+                </div>
+
+                <div class="card">
+                    <h3>Total Doctors</h3>
+                    <h1 id="doctorCount">0</h1>
+                </div>
+
+                <div class="card">
+                    <h3>Appointments</h3>
+                    <h1 id="appointmentCount">0</h1>
+                </div>
+
+                <div class="card">
+                    <h3>Total Bills</h3>
+                    <h1 id="billCount">0</h1>
+                </div>
+
+            </div>
+
+            <h2>Welcome to MediCare Hospital</h2>
+            <p>Manage hospital information easily.</p>
+
+        </section>
+
+        <!-- Patient Management -->
+        <section id="patients" class="page hidden">
+
+            <h2>Patient Management</h2>
+
+            <form id="patientForm">
+
+                <input type="hidden" id="patientId">
+
+                <input type="text" id="patientName"
+                    placeholder="Patient Name" required>
+
+                <input type="number" id="patientAge"
+                    placeholder="Age" min="1" max="120" required>
+
+                <select id="patientGender" required>
+                    <option value="">Select Gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+
+                <input type="text" id="patientPhone"
+                    placeholder="Phone Number" required>
+
+                <input type="text" id="patientAddress"
+                    placeholder="Address" required>
+
+                <button type="submit">Save Patient</button>
+
+                <button type="button" onclick="resetPatientForm()">
+                    Cancel
+                </button>
+
+            </form>
+
+            <h3>Patient Records</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="patientTable"></tbody>
+            </table>
+
+        </section>
+
+        <!-- Doctor Management -->
+        <section id="doctors" class="page hidden">
+
+            <h2>Doctor Management</h2>
+
+            <form id="doctorForm">
+
+                <input type="hidden" id="doctorId">
+
+                <input type="text" id="doctorName"
+                    placeholder="Doctor Name" required>
+
+                <input type="text" id="doctorSpecialization"
+                    placeholder="Specialization" required>
+
+                <input type="text" id="doctorPhone"
+                    placeholder="Phone Number" required>
+
+                <button type="submit">Save Doctor</button>
+
+                <button type="button" onclick="resetDoctorForm()">
+                    Cancel
+                </button>
+
+            </form>
+
+            <h3>Doctor Records</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Specialization</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="doctorTable"></tbody>
+            </table>
+
+        </section>
+
+        <!-- Appointment Management -->
+        <section id="appointments" class="page hidden">
+
+            <h2>Appointment Management</h2>
+
+            <form id="appointmentForm">
+
+                <label>Select Patient</label>
+                <select id="appointmentPatient" required></select>
+
+                <label>Select Doctor</label>
+                <select id="appointmentDoctor" required></select>
+
+                <label>Appointment Date</label>
+                <input type="date" id="appointmentDate" required>
+
+                <label>Appointment Time</label>
+                <input type="time" id="appointmentTime" required>
+
+                <button type="submit">Book Appointment</button>
+
+            </form>
+
+            <h3>Appointment Records</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="appointmentTable"></tbody>
+            </table>
+
+        </section>
+
+        <!-- Billing Management -->
+        <section id="billing" class="page hidden">
+
+            <h2>Billing Management</h2>
+
+            <form id="billForm">
+
+                <label>Select Patient</label>
+                <select id="billPatient" required></select>
+
+                <input type="number" id="billAmount"
+                    placeholder="Bill Amount" min="0.01"
+                    step="0.01" required>
+
+                <select id="billStatus" required>
+                    <option value="Pending">Pending</option>
+                    <option value="Paid">Paid</option>
+                </select>
+
+                <button type="submit">Generate Bill</button>
+
+            </form>
+
+            <h3>Billing Records</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bill ID</th>
+                        <th>Patient</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="billTable"></tbody>
+            </table>
+
+        </section>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
